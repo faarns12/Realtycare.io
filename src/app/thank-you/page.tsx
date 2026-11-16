@@ -13,7 +13,7 @@ export default function ThankYouPage() {
             <path d="M5 12.5l4.5 4.5L19 7.5" />
           </svg>
         </span>
-        <h1 className="mt-6 text-[44px] font-semibold sm:text-[60px]">
+        <h1 className="mt-6 text-[clamp(2rem,5vw,3.75rem)] font-bold">
           Got it. <em className="accent">Talk soon.</em>
         </h1>
         <p className="mx-auto mt-4 max-w-lg text-[17px] text-muted">We’ll email you within one business day with times for your strategy call.</p>

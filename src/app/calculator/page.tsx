@@ -23,7 +23,7 @@ export default function CalculatorPage() {
         <Container className="grid items-end gap-6 lg:grid-cols-[1.3fr_1fr]">
           <div>
             <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-sky-700">Realtor calculator</p>
-            <h1 className="text-[44px] font-semibold sm:text-[64px]">
+            <h1 className="text-[clamp(2rem,5vw,4rem)] font-bold">
               What will your ad budget <em className="accent">turn into?</em>
             </h1>
           </div>

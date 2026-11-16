@@ -25,7 +25,7 @@ export function FaqSection({ id = "faq", title, items }: { id?: string; title: R
       <div className="mx-auto grid w-full max-w-[1180px] gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1.5fr] lg:px-8">
         <div>
           <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-sky-700">FAQ</p>
-          <h2 className="text-[38px] font-semibold sm:text-[50px]">{title}</h2>
+          <h2 className="text-[clamp(1.875rem,4vw,3.125rem)] font-bold">{title}</h2>
           <p className="mt-4 max-w-sm text-[15.5px] text-muted">Can’t find your answer? Book a call and ask us directly.</p>
         </div>
         <FaqList items={items} />

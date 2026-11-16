@@ -200,7 +200,7 @@ export function Calculator() {
           <div className="grid md:grid-cols-2">
             <div className="px-5 pb-6 pt-4 sm:px-6">
               <SideHead title="Separate tools and people" chip="Usual way" />
-              <p className="tabular mt-3 font-serif text-[46px] leading-none">{money(r.usualTotal)}</p>
+              <p className="tabular mt-3 font-sans font-bold text-[clamp(1.5rem,4vw,2.875rem)] leading-none">{money(r.usualTotal)}</p>
               <Scale value={r.usualTotal} max={maxSide} />
               <ul className="mt-3">
                 {r.usualLines.filter((l) => l.amount > 0 || l.label === "Ad budget").map((l) => (
@@ -211,7 +211,7 @@ export function Calculator() {
             </div>
             <div className="border-t border-line px-5 pb-6 pt-4 sm:px-6 md:border-l md:border-t-0">
               <SideHead title="Everything in one place" chip={r.plan.name} accent />
-              <p className="tabular mt-3 font-serif text-[46px] leading-none">{ourTotal == null ? "Custom" : money(ourTotal)}</p>
+              <p className="tabular mt-3 font-sans font-bold text-[clamp(1.5rem,4vw,2.875rem)] leading-none">{ourTotal == null ? "Custom" : money(ourTotal)}</p>
               <Scale value={ourTotal ?? 0} max={maxSide} accent />
               <ul className="mt-3">
                 <Line k="Ad budget" v={money(input.adBudget)} />
@@ -266,9 +266,9 @@ function MoneyField({ id, label, value, onChange, prefix = "$", suffix, side }: 
 
 function Fig({ k, v, s, gold }: { k: string; v: string; s: string; gold?: boolean }) {
   return (
-    <div className="grid grid-cols-[1fr_auto] items-baseline gap-x-3 border-t border-white/10 py-4 first:border-t-0 sm:block sm:border-l sm:border-t-0 sm:px-5 sm:py-0 sm:first:border-l-0 sm:first:pl-0">
+    <div className="grid grid-cols-1 items-baseline gap-x-3 border-t border-white/10 py-4 first:border-t-0 sm:block sm:border-l sm:border-t-0 sm:px-5 sm:py-0 sm:first:border-l-0 sm:first:pl-0">
       <p className="text-[13px] text-navy-300">{k}</p>
-      <p className={`tabular row-span-2 whitespace-nowrap text-right font-serif text-[44px] leading-none sm:mt-2 sm:text-left sm:text-[clamp(40px,4.4vw,58px)] ${gold ? "text-gold-400" : "text-white"}`}>{v}</p>
+      <p className={`tabular mt-2 text-left font-sans font-bold text-[clamp(1.75rem,3.5vw,3rem)] leading-tight [overflow-wrap:anywhere] ${gold ? "text-gold-400" : "text-white"}`}>{v}</p>
       <p className="mt-0.5 text-[12.5px] text-navy-300 sm:mt-2">{s}</p>
     </div>
   );
@@ -344,7 +344,7 @@ function SaveBar({ r }: { r: ReturnType<typeof calculate> }) {
     <div className={`flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-line px-5 py-4 sm:px-6 ${save >= 0 ? "bg-gold-50" : "bg-mist"}`}>
       <div className="flex flex-wrap items-baseline gap-x-4">
         <p className={`text-[14px] font-semibold ${save >= 0 ? "text-gold-800" : "text-muted"}`}>{save >= 0 ? "You could save every month" : "This plan costs more each month by"}</p>
-        <p className="tabular font-serif text-[44px] leading-none">{money(Math.abs(save))}</p>
+        <p className="tabular font-sans font-bold text-[clamp(1.5rem,4vw,2.75rem)] leading-none">{money(Math.abs(save))}</p>
       </div>
       <div className="text-[13px]">
         <p>{save >= 0 ? `That’s ${money(save * 12)} a year.` : `It adds 60-second calling and ${r.plan.followUp} of follow-up.`}</p>

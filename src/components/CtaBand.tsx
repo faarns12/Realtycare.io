@@ -17,7 +17,7 @@ export function CtaBand({
       <Container>
         <div className="on-dark grid gap-6 rounded-[var(--radius-sheet)] bg-navy-900 px-6 py-10 text-white sm:px-10 sm:py-12 md:grid-cols-[1fr_auto] md:items-center">
           <div>
-            <h2 className="text-[32px] font-semibold text-white sm:text-[42px]">{title}</h2>
+            <h2 className="text-[clamp(1.75rem,4vw,2.625rem)] font-bold text-white">{title}</h2>
             <p className="mt-3 max-w-xl text-navy-300">{body}</p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">

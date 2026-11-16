@@ -32,7 +32,7 @@ export function LiveDemo() {
           <ol className="mt-5 grid">
             {log.map(([t, e], i) => (
               <li key={t} className="grid grid-cols-[92px_1fr] gap-3 border-t border-white/10 py-3 text-[14px]">
-                <span className="tabular font-mono text-[12.5px] text-navy-300">{t}</span>
+                <span className="tabular font-sans text-[12.5px] text-navy-300">{t}</span>
                 <span className={i === 5 ? "font-semibold text-gold-400" : "text-white/90"}>{e}</span>
               </li>
             ))}

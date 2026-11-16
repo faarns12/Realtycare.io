@@ -49,7 +49,7 @@ export function SectionHead({
   return (
     <div className={`${align === "center" ? "mx-auto text-center" : ""} max-w-3xl ${dark ? "on-dark" : ""}`}>
       {eyebrow && <Eyebrow dark={dark}>{eyebrow}</Eyebrow>}
-      <h2 className={`text-[34px] font-semibold sm:text-[48px] ${dark ? "text-white" : ""}`}>{title}</h2>
+      <h2 className={`text-[clamp(1.75rem,4vw,3rem)] font-bold ${dark ? "text-white" : ""}`}>{title}</h2>
       {intro && <p className={`mt-4 text-[17px] ${dark ? "text-navy-300" : "text-muted"}`}>{intro}</p>}
     </div>
   );
@@ -80,7 +80,7 @@ export function ButtonLink({
   arrow?: boolean;
 }) {
   const external = href.startsWith("http");
-  const cls = `inline-flex min-h-11 whitespace-nowrap items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[15px] font-semibold transition-colors ${buttonStyles[variant]} ${className}`;
+  const cls = `inline-flex min-h-11 max-w-full text-center items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[15px] font-semibold transition-[background-color,border-color,box-shadow,transform] duration-200 motion-safe:hover:-translate-y-0.5 hover:shadow-sm ${buttonStyles[variant]} ${className}`;
   const inner = (
     <>
       {children}
@@ -107,7 +107,7 @@ export function Button({
   return (
     <button
       {...rest}
-      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[15px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60 ${buttonStyles[variant]} ${className}`}
+      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[15px] font-semibold transition-[background-color,border-color,box-shadow,transform] duration-200 motion-safe:hover:-translate-y-0.5 hover:shadow-sm disabled:cursor-not-allowed disabled:opacity-60 ${buttonStyles[variant]} ${className}`}
     >
       {children}
     </button>
@@ -141,7 +141,7 @@ export function Cross({ className = "h-4 w-4 text-muted" }: { className?: string
 /* ---------- Cards ---------- */
 
 export function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
-  return <div className={`rounded-[var(--radius-card)] border border-line bg-paper shadow-[var(--shadow-card)] ${className}`}>{children}</div>;
+  return <div className={`rounded-[var(--radius-card)] border border-line bg-linear-to-br from-white to-mist/70 shadow-[var(--shadow-card)] ${className}`}>{children}</div>;
 }
 
 export function DarkCard({ children, className = "" }: { children: ReactNode; className?: string }) {

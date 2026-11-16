@@ -20,7 +20,7 @@ export default function BookPage() {
       <Container className="grid gap-10 lg:grid-cols-[1fr_1.25fr] lg:gap-16">
         <div>
           <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-sky-700">Strategy call · 15 minutes</p>
-          <h1 className="text-[44px] font-semibold sm:text-[60px]">
+          <h1 className="text-[clamp(2rem,5vw,3.75rem)] font-bold">
             Let’s look at <em className="accent">your leads.</em>
           </h1>
           <p className="mt-5 text-[17px] text-muted">Tell us a little about your business. We’ll reply within one business day with times that suit you.</p>

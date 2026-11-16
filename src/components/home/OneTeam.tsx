@@ -56,7 +56,7 @@ export function OneTeam() {
             </div>
             <div className="lg:text-right">
               <p className="text-[13px] text-navy-300">Usual total, before ad budget</p>
-              <p className="tabular font-serif text-[48px] leading-none text-white line-through decoration-white/30">$3,120</p>
+              <p className="tabular font-sans font-bold text-[48px] leading-none text-white line-through decoration-white/30">$3,120</p>
               <p className="mt-1 text-[14px] text-sky-300">RealtyCare Growth: $1,499 with ads managed</p>
             </div>
           </div>

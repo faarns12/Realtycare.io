@@ -1,19 +1,24 @@
 import Link from "next/link";
-import { bookHref, sixtySecondFootnote } from "@/content/site";
+import { CrmSlideshow } from "./CrmSlideshow";
+import { bookHref } from "@/content/site";
 import { ButtonLink, Container } from "@/components/ui";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pb-16 pt-10 sm:pb-24 sm:pt-16">
+    <section className="hero-surface relative pb-16 pt-10 sm:pb-24 sm:pt-16">
       <Container className="text-center">
-        <p className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-mist px-3 py-1 text-[13px] font-medium text-muted">
-          <span className="h-2 w-2 rounded-full bg-sky-400" aria-hidden="true" />
-          Every lead called within 60 seconds*
+        <p className="hero-badge mx-auto mb-7 inline-flex max-w-full items-center gap-2.5 rounded-full px-4 py-3 text-[12px] font-medium leading-snug text-navy-900 sm:gap-3 sm:px-6 sm:text-[16px]">
+          <svg className="h-5 w-5 shrink-0 text-sky-600" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="m13 4 2.2 5.8L21 12l-5.8 2.2L13 20l-2.2-5.8L5 12l5.8-2.2L13 4Z" fill="currentColor" />
+            <path d="m5 2 .9 2.1L8 5l-2.1.9L5 8l-.9-2.1L2 5l2.1-.9L5 2Z" fill="currentColor" opacity=".55" />
+            <path d="m4 16 .9 2.1L7 19l-2.1.9L4 22l-.9-2.1L1 19l2.1-.9L4 16Z" fill="currentColor" opacity=".7" />
+          </svg>
+          <span>Every lead called within <span className="font-semibold">60 seconds*</span></span>
         </p>
-        <h1 className="mx-auto max-w-4xl text-[44px] font-semibold sm:text-[68px] lg:text-[80px]">
+        <h1 className="mx-auto max-w-[1100px] text-[clamp(2rem,5vw,4.5rem)] font-bold">
           You close the deals.
           <br />
-          <em className="accent">We do everything before that.</em>
+          <span className="accent hero-accent">We do everything before that.</span>
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-[17px] text-muted sm:text-[19px]">
           The all-in-one platform for realtors and brokerages. We run your ads, call every lead, follow up for months and set the appointment.
@@ -30,47 +35,11 @@ export function Hero() {
 
       <Container className="mt-14 sm:mt-20">
         <div className="grid gap-4 lg:grid-cols-[1.35fr_1fr]">
-          <LeadTimeline />
+          <CrmSlideshow />
           <BudgetPreview />
         </div>
-        <p className="mt-4 text-center text-[12px] text-muted">Example lead and numbers for illustration. {sixtySecondFootnote}</p>
       </Container>
     </section>
-  );
-}
-
-/** A single lead moving from form to booked appointment. Example data. */
-function LeadTimeline() {
-  const steps = [
-    { t: "0:00", title: "New Facebook lead", body: "Jessica Lane · interested in 3-bed homes in Ann Arbor" },
-    { t: "0:42", title: "AI assistant calls", body: "Confirms timeline (3 months), pre-approved, budget $450k" },
-    { t: "3:15", title: "Appointment booked", body: "Tuesday 10:00 AM with you · added to your calendar" },
-    { t: "3:16", title: "Saved to your CRM", body: "Call summary, recording and next step logged" },
-  ];
-  return (
-    <div className="on-dark rounded-[var(--radius-card)] bg-navy-900 p-5 text-left text-white shadow-[var(--shadow-pop)] sm:p-7">
-      <div className="flex items-center justify-between gap-3">
-        <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-navy-300">One lead, start to finish</p>
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-sky-400/15 px-2.5 py-1 text-[12px] font-medium text-sky-300">
-          <span className="h-1.5 w-1.5 rounded-full bg-sky-400" aria-hidden="true" /> Example
-        </span>
-      </div>
-      <ol className="mt-6 grid gap-0">
-        {steps.map((s, i) => (
-          <li key={s.t} className="grid grid-cols-[56px_20px_1fr] gap-3">
-            <span className="tabular pt-0.5 font-mono text-[13px] text-sky-300">{s.t}</span>
-            <span className="relative flex justify-center" aria-hidden="true">
-              <span className={`mt-1.5 h-2.5 w-2.5 rounded-full ${i === 2 ? "bg-gold-400" : "bg-sky-400"}`} />
-              {i < steps.length - 1 && <span className="absolute top-5 bottom-0 w-px bg-white/15" />}
-            </span>
-            <div className="pb-6">
-              <p className="font-display text-[17px] font-semibold tracking-[-0.01em]">{s.title}</p>
-              <p className="mt-0.5 text-[14px] text-navy-300">{s.body}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </div>
   );
 }
 
@@ -81,7 +50,7 @@ function BudgetPreview() {
     { k: "Likely new clients", v: "4–6" },
   ];
   return (
-    <div className="flex flex-col rounded-[var(--radius-card)] border border-line bg-mist p-5 text-left sm:p-7">
+    <div className="flex flex-col rounded-[var(--radius-card)] border border-line bg-linear-to-br from-white to-sky-50/50 p-5 text-left sm:p-7">
       <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-muted">What your ad budget turns into</p>
       <dl className="mt-5 grid gap-0">
         {rows.map((r) => (
@@ -93,7 +62,7 @@ function BudgetPreview() {
       </dl>
       <div className="mt-5 rounded-2xl bg-gold-50 p-4">
         <p className="text-[13px] font-medium text-gold-800">Likely commission at $8,000 a deal</p>
-        <p className="tabular font-serif text-[44px] leading-none">$38,171</p>
+        <p className="tabular font-sans font-bold text-[44px] leading-none">$38,171</p>
       </div>
       <Link href="/calculator" className="mt-auto inline-flex items-center gap-2 pt-5 text-[15px] font-semibold text-sky-700 hover:underline">
         Try it with your numbers →
