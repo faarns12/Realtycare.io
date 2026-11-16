@@ -55,7 +55,7 @@ export function Footer() {
 
       <Container className="flex flex-col gap-3 border-t border-white/10 py-6 text-[13px] text-navy-300 sm:flex-row sm:items-center sm:justify-between">
         <p>
-          © {year} {site.name}. {site.legalName}, company no. {site.companyNumber}.
+          © {year} {site.name}.
         </p>
         <div className="flex gap-5">
           <Link href="/privacy" className="hover:text-white">Privacy policy</Link>

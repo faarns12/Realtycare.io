@@ -74,7 +74,7 @@ export default function ProductPage() {
       <section className="pb-12 pt-10 text-center sm:pt-16">
         <Container>
           <p className="mx-auto mb-5 inline-flex rounded-full border border-line bg-mist px-3 py-1 text-[13px] font-medium text-muted">The operating system for your real estate business</p>
-          <h1 className="mx-auto max-w-4xl text-[44px] font-semibold sm:text-[68px]">
+          <h1 className="mx-auto max-w-4xl text-[clamp(2rem,5vw,4.25rem)] font-bold">
             Everything between the ad <em className="accent">and the appointment.</em>
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-[17px] text-muted">AI calling, CRM, follow-up, ads and websites in one platform, so no lead waits and nothing falls through the cracks.</p>

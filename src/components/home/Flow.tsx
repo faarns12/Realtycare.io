@@ -1,129 +1,117 @@
-import type { ReactNode } from "react";
-import { Section, SectionHead } from "@/components/ui";
+﻿"use client";
 
-/** "From first inquiry to booked appointment": each step has a small UI preview (example data). */
-const steps: { title: string; body: string; ui: ReactNode }[] = [
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { Arrow, Section, SectionHead } from "@/components/ui";
+import styles from "./Flow.module.css";
+
+/** Actual product screens captured from RealtyCare CRM, with contacts hidden. */
+const steps = [
   {
     title: "Lead captured",
     body: "From your website, landing pages, Facebook lead ads or portals like Zillow. It lands in one inbox.",
-    ui: (
-      <MiniCard>
-        <Row left={<Badge>Facebook</Badge>} right={<span className="text-muted">just now</span>} />
-        <p className="mt-3 font-semibold">Marcus Reed</p>
-        <p className="text-[13px] text-muted">“What’s my home worth?” · Westfield, IN</p>
-      </MiniCard>
-    ),
+    screen: "leads", label: "Your lead inbox", width: 1152, height: 650,
+    alt: "RealtyCare lead workspace with filters, qualification totals and the lead inbox. Contact details are blurred.",
   },
   {
     title: "AI calls within 60 seconds*",
     body: "Your AI assistant calls, introduces itself as an AI and starts a natural conversation.",
-    ui: (
-      <MiniCard>
-        <Row left={<span className="font-semibold">Calling Marcus…</span>} right={<span className="tabular font-mono text-sky-700">0:38</span>} />
-        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-mist">
-          <div className="h-full w-2/3 rounded-full bg-sky-400" />
-        </div>
-        <p className="mt-2 text-[13px] text-muted">If no answer: text now, call again in 2 hours</p>
-      </MiniCard>
-    ),
+    screen: "calling-overview", label: "AI calling overview", width: 1152, height: 530,
+    alt: "Actual RealtyCare AI Calling Overview with lead totals, appointment metrics and AI lead summary.",
   },
   {
     title: "Lead qualified",
     body: "Budget, timeline, location and pre-approval, asked the way you would ask them.",
-    ui: (
-      <MiniCard>
-        <div className="flex flex-wrap gap-1.5">
-          {["Selling in 60 days", "Owns home", "Also buying", "$520k est."].map((t) => (
-            <Badge key={t}>{t}</Badge>
-          ))}
-        </div>
-        <p className="mt-3 text-[13px] text-muted">Lead score</p>
-        <p className="font-display text-[22px] font-semibold">
-          86<span className="text-[14px] font-medium text-muted"> / 100</span>
-        </p>
-      </MiniCard>
-    ),
+    screen: "qualification", label: "AI lead qualification", width: 544, height: 265,
+    alt: "RealtyCare AI Lead Summary showing the qualification chart and qualified, follow-up and not-qualified categories.",
   },
   {
     title: "Appointment booked",
     body: "Qualified leads pick a time on your calendar, or get transferred to you live.",
-    ui: (
-      <MiniCard>
-        <p className="text-[12px] font-semibold uppercase tracking-[0.12em] text-muted">Thursday</p>
-        <div className="mt-2 grid gap-1.5 text-[13px]">
-          <div className="rounded-lg bg-mist px-3 py-2 text-muted">9:00 AM · Open</div>
-          <div className="rounded-lg bg-sky-600 px-3 py-2 font-semibold text-white">11:30 AM · Listing consult, Marcus Reed</div>
-          <div className="rounded-lg bg-mist px-3 py-2 text-muted">2:00 PM · Open</div>
-        </div>
-      </MiniCard>
-    ),
+    screen: "appointments", label: "Your appointment calendar", width: 1152, height: 880,
+    alt: "RealtyCare appointment workspace showing the monthly calendar, booking controls and daily agenda.",
   },
   {
     title: "Deal in your pipeline",
     body: "Every call, note and next step is in your CRM. Leads who aren’t ready stay on follow-up for 12 months.",
-    ui: (
-      <MiniCard>
-        <div className="grid grid-cols-3 gap-2 text-[12px]">
-          {[
-            ["Qualified", "14"],
-            ["Appointment", "6"],
-            ["Closed", "2"],
-          ].map(([k, v], i) => (
-            <div key={k} className={`rounded-lg p-2.5 ${i === 1 ? "bg-sky-50" : "bg-mist"}`}>
-              <p className="text-muted">{k}</p>
-              <p className="font-display text-[20px] font-semibold">{v}</p>
-            </div>
-          ))}
-        </div>
-      </MiniCard>
-    ),
+    screen: "pipeline", label: "Your CRM pipeline", width: 686, height: 253,
+    alt: "RealtyCare CRM pipeline showing New Lead, Contacted, Application and Appointment Set stages.",
   },
 ];
 
 export function Flow() {
-  return (
-    <Section className="bg-mist">
-      <SectionHead
-        eyebrow="How RealtyCare works"
-        title={
-          <>
-            From first inquiry to booked appointment, <em className="accent">here’s the flow.</em>
-          </>
+  const listRef = useRef<HTMLOListElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [selected, setSelected] = useState<(typeof steps)[number] | null>(null);
+
+  useEffect(() => {
+    if (selected && !dialogRef.current?.open) dialogRef.current?.showModal();
+  }, [selected]);
+
+  useEffect(() => {
+    if (!listRef.current || !("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.setAttribute("data-visible", "true");
+          observer.unobserve(entry.target);
         }
+      });
+    }, { threshold: 0.12 });
+    listRef.current.querySelectorAll("li").forEach((item) => {
+      if (item.getBoundingClientRect().top < window.innerHeight) return;
+      item.setAttribute("data-reveal", "true");
+      observer.observe(item);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <Section id="how-it-works" className={styles.section}>
+      <SectionHead
+        eyebrow="HOW REALTYCARE WORKS"
+        title={<>From first inquiry to booked appointment, <span className="accent">here&rsquo;s the flow.</span></>}
         intro="See how RealtyCare captures, calls and qualifies new leads while you keep working your business."
       />
-      <ol className="relative mx-auto mt-14 grid max-w-5xl gap-10 sm:gap-6">
-        <span aria-hidden="true" className="absolute bottom-6 left-[19px] top-6 w-px bg-line-strong md:left-1/2" />
-        {steps.map((s, i) => (
-          <li key={s.title} className="relative grid grid-cols-[40px_1fr] gap-5 md:grid-cols-[1fr_40px_1fr] md:gap-10">
-            <div className={`hidden md:block ${i % 2 ? "md:order-3" : ""}`}>{s.ui}</div>
-            <span className="tabular relative z-10 grid h-10 w-10 place-items-center self-start rounded-full bg-navy-900 font-display text-[15px] font-semibold text-white md:order-2 md:self-center">
-              {i + 1}
-            </span>
-            <div className={`md:self-center ${i % 2 ? "md:order-1 md:text-right" : "md:order-3"}`}>
-              <h3 className="text-[22px] font-semibold">{s.title}</h3>
-              <p className="mt-1.5 text-[15px] text-muted">{s.body}</p>
-              <div className="mt-4 md:hidden">{s.ui}</div>
+      <ol ref={listRef} className={styles.workflow}>
+        {steps.map((step, i) => (
+          <li key={step.title} className={styles.step}>
+            {i < steps.length - 1 && (
+              <svg className={styles.connector} viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                <path d={i % 2 ? "M50 0 C-7 32 -7 68 50 100" : "M50 0 C107 32 107 68 50 100"} />
+              </svg>
+            )}
+            <span className={styles.number} aria-hidden="true">{i + 1}</span>
+            <div className={styles.copy}>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+            </div>
+            <div className={styles.preview}>
+              <button type="button" className={styles.screenCard} onClick={() => setSelected(step)} aria-label={`View larger screenshot: ${step.label}`} aria-haspopup="dialog">
+                <span className={styles.screenBar}>
+                  <span className={styles.screenBrand}><span className={styles.brandMark} aria-hidden="true" />RealtyCare<span className={styles.screenDivider}>/</span><span className={styles.screenLabel}>{step.label}</span></span>
+                  <span className={styles.expand} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7" /></svg></span>
+                </span>
+                <span className={styles.screenCanvas}>
+                  <Image src={`/images/crm/${step.screen}.webp`} alt={step.alt} width={step.width} height={step.height} sizes="(max-width: 767px) calc(100vw - 100px), (max-width: 1200px) 40vw, 420px" />
+                </span>
+                <span className={styles.screenFooter}><span>Actual product screen</span><span className={styles.viewScreen}>View screen <Arrow className="h-3.5 w-3.5" /></span></span>
+              </button>
             </div>
           </li>
         ))}
       </ol>
-      <p className="mt-10 text-center text-[12px] text-muted">Previews use example data.</p>
+      <p className={styles.screenNote}>Screenshots from the RealtyCare CRM. Contact details are hidden.</p>
+      <dialog ref={dialogRef} className={styles.dialog} aria-labelledby="crm-screen-title" onClose={() => setSelected(null)} onClick={(event) => { if (event.target === event.currentTarget) dialogRef.current?.close(); }}>
+        {selected && <div className={styles.dialogContent}>
+          <div className={styles.dialogHeader}>
+            <div><p className={styles.dialogEyebrow}>REALTYCARE CRM</p><h3 id="crm-screen-title">{selected.label}</h3></div>
+            <button type="button" className={styles.close} onClick={() => dialogRef.current?.close()} aria-label="Close screenshot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" /></svg></button>
+          </div>
+          <div className={styles.dialogImage}><Image src={`/images/crm/${selected.screen}.webp`} alt={selected.alt} width={selected.width} height={selected.height} sizes="92vw" /></div>
+          <p className={styles.dialogCaption}>Actual product screen. Contact details are hidden.</p>
+        </div>}
+      </dialog>
     </Section>
   );
-}
-
-function MiniCard({ children }: { children: ReactNode }) {
-  return <div className="rounded-2xl border border-line bg-paper p-4 text-left text-[14px] shadow-[var(--shadow-card)]">{children}</div>;
-}
-function Row({ left, right }: { left: ReactNode; right: ReactNode }) {
-  return (
-    <div className="flex items-center justify-between gap-3 text-[13px]">
-      {left}
-      {right}
-    </div>
-  );
-}
-function Badge({ children }: { children: ReactNode }) {
-  return <span className="rounded-full border border-line bg-mist px-2.5 py-0.5 text-[12px] font-medium text-ink">{children}</span>;
 }

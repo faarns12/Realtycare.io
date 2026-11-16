@@ -18,7 +18,7 @@ export default function PricingPage() {
     <>
       <section className="pb-10 pt-10 text-center sm:pt-16">
         <Container>
-          <h1 className="text-[44px] font-semibold sm:text-[68px]">
+          <h1 className="text-[clamp(2rem,5vw,4.25rem)] font-bold">
             Know what you pay.
             <br />
             <em className="accent">Know what you get.</em>
@@ -57,7 +57,7 @@ export default function PricingPage() {
               <p className="mt-2 max-w-xl text-navy-300">{landingPageOffer.description}</p>
             </div>
             <div className="md:text-right">
-              <p className="tabular font-serif text-[64px] leading-none text-gold-400">{money(landingPageOffer.price)}</p>
+              <p className="tabular font-sans font-bold text-[64px] leading-none text-gold-400">{money(landingPageOffer.price)}</p>
               <p className="mt-1 text-[14px] text-navy-300">
                 one time · hosting ${landingPageOffer.hosting}/mo · extra pages ${landingPageOffer.extraPage}
               </p>

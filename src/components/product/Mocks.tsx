@@ -33,7 +33,7 @@ export function CallLogMock() {
               <tr key={r.name} className="border-t border-line">
                 <td className="py-2.5 font-medium">{r.name}</td>
                 <td className="py-2.5 text-muted">{r.src}</td>
-                <td className="tabular py-2.5 font-mono text-[12.5px]">{r.time}</td>
+                <td className="tabular py-2.5 font-sans text-[12.5px]">{r.time}</td>
                 <td className="py-2.5">
                   <span className={`rounded-full px-2 py-0.5 text-[12px] font-medium ${tone[r.outcome] ?? "bg-mist text-muted"}`}>{r.outcome}</span>
                 </td>

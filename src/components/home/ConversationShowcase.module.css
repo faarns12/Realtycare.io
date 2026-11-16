@@ -1,0 +1,44 @@
+.showcase { position: relative; min-width: 0; width: 100%; padding: 48px 14% 115px 0; isolation: isolate; }
+.glow { position: absolute; z-index: -1; inset: 0 -3% 15%; background: radial-gradient(ellipse at 50% 50%, #d9efffbd, #f1f8ff70 45%, transparent 72%); }
+.desktop { position: relative; border: 6px solid #172d44; border-bottom: 0; border-radius: 18px 18px 12px 12px; background: #172d44; box-shadow: 0 24px 60px -28px #22405f66; }
+.desktop > div[role="region"] { border-radius: 0; border: 0; box-shadow: none; }
+.desktop div[aria-live] { width: 100%; min-height: 0; height: clamp(220px, 28vw, 300px); aspect-ratio: auto; }
+.desktop div:has(> [aria-label="Choose a screenshot"]) { left: 35%; }
+.browser { display: flex; align-items: center; gap: 4px; height: 28px; padding: 0 10px; background: #f9fbfe; border-radius: 10px 10px 0 0; border-bottom: 1px solid #e3e8ef; }
+.browser > span { width: 4px; height: 4px; background: #c5d3e0; border-radius: 50%; }
+.browser p { margin-left: 12px; color: #5b6678; font-size: 9px; font-weight: 500; }
+.chin { position: relative; display: grid; place-items: center; height: 20px; margin: 0 -6px; background: linear-gradient(#edf2f7, #d7e2ec); border-radius: 0 0 12px 12px; }
+.chin span { width: 6px; height: 6px; border-radius: 50%; background: #8a9fb2; }
+.stand { position: absolute; top: 100%; left: 35%; width: 30%; height: 40px; background: linear-gradient(90deg,#c4d2df,#e9f0f6 50%,#becddb); clip-path: polygon(30% 0, 70% 0, 78% 80%, 100% 89%, 100% 100%, 0 100%, 0 89%, 22% 80%); }
+.phone { position: absolute; right: 0; bottom: 58px; width: 38%; padding: 23px 10px 18px; border: 5px solid #172d44; border-radius: 28px; background: #0f1e2e; color: white; box-shadow: 0 18px 40px -15px #0f1e2e66, 0 0 0 1px #ffffff; }
+.notch { position: absolute; top: 7px; left: 32%; width: 36%; height: 8px; border-radius: 12px; background: #06111d; }
+.contact { display: flex; align-items: center; gap: 6px; }
+.avatar { display: grid; place-items: center; flex-shrink: 0; width: 27px; height: 27px; border: 1px solid #7fdcff22; border-radius: 50%; background: #22405f; font-size: 9px; font-weight: 600; }
+.contact p { font-size: 10px; font-weight: 600; }
+.contact div > span { display: block; margin-top: 2px; font-size: 7px; color: #a9b6c6; }
+.callStatus { display: flex; align-items: center; gap: 4px; margin-top: 14px; color: #7fdcff; font-size: 7px; }
+.callStatus > span:first-child { width: 4px; height: 4px; background: #00c2ff; border-radius: 50%; }
+.timer { margin-left: auto; font-variant-numeric: tabular-nums; }
+.wave { display: flex; align-items: center; justify-content: center; gap: 3px; height: 40px; }
+.wave span { width: 2px; border-radius: 4px; background: #00c2ff; transform-origin: center; }
+.messages { display: grid; gap: 7px; }
+.message { max-width: 94%; padding: 8px; border: 1px solid #7fdcff0a; border-radius: 11px 11px 11px 3px; background: #172d44; }
+.message p { margin-bottom: 3px; color: #7fdcff; font-size: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; }
+.message > span { display: block; font-size: 8px; line-height: 1.65; }
+.message[data-lead="true"] { margin-left: auto; border-radius: 11px 11px 3px 11px; background: #0789c2; }
+.message[data-lead="true"] p { color: #ddf5ff; }
+.tags { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 12px; }
+.tags span { padding: 3px 5px; font-size: 6px; border: 1px solid #a9b6c633; border-radius: 20px; }
+.tags span:last-child { background: #f2b84b; color: #0f1e2e; border-color: transparent; }
+.homeBar { width: 36%; height: 3px; margin: 14px auto -7px; background: #a9b6c6; border-radius: 20px; }
+.caption { position: absolute; bottom: 0; left: 0; right: 0; color: #5b6678; font-size: 11px; text-align: center; }
+@media (min-width: 640px) and (max-width: 1023px) { .showcase { max-width: 610px; margin: auto; } }
+@media (max-width: 399px) {
+  .showcase { min-height: 550px; padding-top: 30px; padding-bottom: 155px; padding-right: 8%; }
+  .phone { width: 48%; bottom: 40px; border-width: 4px; padding: 22px 8px 16px; border-radius: 23px; }
+  .caption { font-size: 10px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .wave span { animation: speaking 1300ms ease-in-out infinite alternate; }
+  @keyframes speaking { from { transform: scaleY(.45); opacity: .5; } to { transform: scaleY(1); opacity: 1; } }
+}

@@ -9,7 +9,7 @@ export function LegalPage({ title, updated, sections }: { title: string; updated
         <p className="mb-6 rounded-xl border border-gold-400/50 bg-gold-50 px-4 py-3 text-[14px]">
           Draft template. Have a lawyer review this page before launch and replace every item in [brackets].
         </p>
-        <h1 className="text-[42px] font-semibold sm:text-[54px]">{title}</h1>
+        <h1 className="text-[clamp(2rem,4.5vw,3.375rem)] font-bold">{title}</h1>
         <p className="mt-3 text-[14px] text-muted">Last updated: {updated}</p>
         <div className="mt-10 grid gap-8">
           {sections.map(([h, ps]) => (
