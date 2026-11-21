@@ -20,6 +20,10 @@ export function Footer() {
           <p className="font-display text-[40px] font-semibold leading-[1.02] tracking-[-0.03em] sm:text-[48px]">
             Let’s grow <em className="accent">together.</em>
           </p>
+          <div className="grid gap-1.5 text-[15px]">
+            <a href={`tel:${site.phone.tel}`} className="text-white/85 hover:text-sky-300">{site.phone.display}</a>
+            <a href={`mailto:${site.contactEmail}`} className="text-white/85 hover:text-sky-300">{site.contactEmail}</a>
+          </div>
           <div className="flex gap-3">
             {socials.map((s) =>
               site.social[s.key] ? (
@@ -53,17 +57,17 @@ export function Footer() {
         </div>
       </Container>
 
-      <Container className="flex flex-col gap-3 border-t border-white/10 py-6 text-[13px] text-navy-300 sm:flex-row sm:items-center sm:justify-between">
+      <Container className="relative z-10 flex flex-col gap-3 border-t border-white/10 py-6 text-[13px] text-navy-300 sm:flex-row sm:items-center sm:justify-between">
         <p>
           © {year} {site.name}.
         </p>
         <div className="flex gap-5">
-          <Link href="/privacy" className="hover:text-white">Privacy policy</Link>
-          <Link href="/terms" className="hover:text-white">Terms</Link>
+          <Link href="/privacy" className="-my-2 py-2 underline-offset-4 hover:text-white hover:underline">Privacy policy</Link>
+          <Link href="/terms" className="-my-2 py-2 underline-offset-4 hover:text-white hover:underline">Terms</Link>
         </div>
       </Container>
 
-      <div aria-hidden="true" className="select-none px-4 text-center font-display text-[19vw] font-bold leading-[0.78] tracking-[-0.06em] text-navy-800 sm:px-6">
+      <div aria-hidden="true" className="pointer-events-none select-none px-4 text-center font-display text-[19vw] font-bold leading-[0.78] tracking-[-0.06em] text-navy-800 sm:px-6">
         RealtyCare
       </div>
     </footer>

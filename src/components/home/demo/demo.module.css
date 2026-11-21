@@ -1,0 +1,42 @@
+/* Shared pieces of the scripted demos. The demo root must be a size container (container-type: inline-size). */
+
+.cursor {
+  position: absolute;
+  z-index: 20;
+  width: clamp(14px, 2.6cqw, 22px);
+  height: clamp(14px, 2.6cqw, 22px);
+  margin: -2px 0 0 -4px;
+  transition: left 850ms cubic-bezier(.45,.05,.2,1), top 850ms cubic-bezier(.45,.05,.2,1);
+  pointer-events: none;
+}
+.cursor svg { display: block; width: 100%; height: 100%; fill: #0f1e2e; stroke: #fff; stroke-width: 1.6; stroke-linejoin: round; filter: drop-shadow(0 3px 4px #0f1e2e55); transform-origin: 20% 15%; }
+.press { animation: press 320ms ease-out; }
+@keyframes press { 35% { transform: scale(.78); } }
+.ripple {
+  position: absolute; left: 4px; top: 2px;
+  width: 30px; height: 30px; margin: -15px 0 0 -15px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--click) 70%, transparent);
+  background: color-mix(in srgb, var(--click) 20%, transparent);
+  animation: ripple 650ms ease-out forwards;
+}
+@keyframes ripple { from { transform: scale(.2); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+
+.toast {
+  position: absolute; z-index: 19; left: 50%; bottom: 1.8em;
+  display: flex; align-items: center; gap: .8em;
+  padding: .9em 1.6em .9em .9em;
+  border-radius: 1.2em; background: #0f1e2ef2; color: #fff;
+  font-size: calc(100cqw / 76 * 1.2); font-weight: 600; white-space: nowrap;
+  box-shadow: 0 1.4em 3em -1.2em #0f1e2e;
+  opacity: 0; transform: translate(-50%, 1.2em) scale(.96);
+  transition: opacity 300ms ease, transform 450ms cubic-bezier(.22,1,.36,1);
+  pointer-events: none;
+}
+.toast[data-open="true"] { opacity: 1; transform: translate(-50%, 0); }
+.toastIcon { display: grid; place-items: center; width: 1.8em; height: 1.8em; border-radius: .5em; background: #22c55e; }
+.toastIcon svg { width: 1.1em; height: 1.1em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor, .toast { transition: none; }
+}

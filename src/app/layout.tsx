@@ -4,6 +4,7 @@ import "./globals.css";
 import { site } from "@/content/site";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -23,15 +24,13 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
+      <body suppressHydrationWarning>
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-navy-900 focus:px-4 focus:py-2 focus:text-white">
           Skip to content
         </a>
-        <div className="mx-2 mt-2 rounded-[var(--radius-sheet)] bg-paper sm:mx-3 sm:mt-3">
-          <Header />
-          <main id="main">{children}</main>
-        </div>
-        <Footer />
+        <SiteChrome header={<Header />} footer={<Footer />}>
+          {children}
+        </SiteChrome>
       </body>
     </html>
   );

@@ -1,5 +1,4 @@
-import Link from "next/link";
-import { CrmSlideshow } from "./CrmSlideshow";
+import { DashboardShowcase } from "./DashboardShowcase";
 import { bookHref } from "@/content/site";
 import { ButtonLink, Container } from "@/components/ui";
 
@@ -34,10 +33,8 @@ export function Hero() {
       </Container>
 
       <Container className="mt-14 sm:mt-20">
-        <div className="grid gap-4 lg:grid-cols-[1.35fr_1fr]">
-          <CrmSlideshow />
-          <BudgetPreview />
-        </div>
+        <DashboardShowcase />
+        <BudgetPreview />
       </Container>
     </section>
   );
@@ -50,23 +47,22 @@ function BudgetPreview() {
     { k: "Likely new clients", v: "4–6" },
   ];
   return (
-    <div className="flex flex-col rounded-[var(--radius-card)] border border-line bg-linear-to-br from-white to-sky-50/50 p-5 text-left sm:p-7">
-      <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-muted">What your ad budget turns into</p>
-      <dl className="mt-5 grid gap-0">
-        {rows.map((r) => (
-          <div key={r.k} className="flex items-baseline justify-between border-b border-line py-3">
-            <dt className="text-[15px] text-muted">{r.k}</dt>
-            <dd className="tabular font-display text-[22px] font-semibold">{r.v}</dd>
-          </div>
-        ))}
-      </dl>
-      <div className="mt-5 rounded-2xl bg-gold-50 p-4">
-        <p className="text-[13px] font-medium text-gold-800">Likely commission at $8,000 a deal</p>
-        <p className="tabular font-sans font-bold text-[44px] leading-none">$38,171</p>
+    <div className="mx-auto mt-10 grid max-w-[1080px] gap-5 rounded-[var(--radius-card)] border border-line bg-linear-to-br from-white to-sky-50/50 p-5 text-left sm:p-7 lg:grid-cols-[1.4fr_1fr] lg:items-center lg:gap-8">
+      <div>
+        <p className="text-[12px] font-semibold uppercase tracking-[0.14em] text-muted">What your ad budget turns into</p>
+        <dl className="mt-4 grid gap-0 sm:grid-cols-3 sm:gap-6">
+          {rows.map((r) => (
+            <div key={r.k} className="flex items-baseline justify-between border-b border-line py-3 sm:block sm:border-b-0 sm:py-0">
+              <dt className="text-[14px] text-muted">{r.k}</dt>
+              <dd className="tabular font-display text-[22px] font-semibold sm:mt-1 sm:text-[26px]">{r.v}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
-      <Link href="/calculator" className="mt-auto inline-flex items-center gap-2 pt-5 text-[15px] font-semibold text-sky-700 hover:underline">
-        Try it with your numbers →
-      </Link>
+      <div className="rounded-2xl bg-gold-50 p-4">
+        <p className="text-[13px] font-medium text-gold-800">Likely commission at $8,000 a deal</p>
+        <p className="tabular font-sans text-[40px] font-bold leading-none">$38,171</p>
+      </div>
     </div>
   );
 }

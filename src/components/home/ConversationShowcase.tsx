@@ -26,7 +26,6 @@ export function ConversationShowcase() {
         <div className={styles.tags}><span>3 months</span><span>Pre-approved</span><span>Hot lead</span></div>
         <div className={styles.homeBar} aria-hidden="true" />
       </div>
-      <p className={styles.caption}>Your workspace on desktop. Every conversation connected.</p>
     </div>
   );
 }

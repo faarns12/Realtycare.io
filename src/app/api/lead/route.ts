@@ -1,10 +1,11 @@
 /**
  * POST /api/lead
- * Receives every form on the site and saves it as a row in your Google Sheet
- * (through the Apps Script in /google-apps-script). Optionally starts a Vapi demo call.
+ * Receives every form on the site and saves it to Supabase (the /admin dashboard reads from there)
+ * and/or your Google Sheet (through the Apps Script in /google-apps-script). Optionally starts a Vapi demo call.
  */
 import { NextResponse } from "next/server";
 import { formTypes, HONEYPOT, isFormType } from "@/lib/forms";
+import { insertLead, supabaseConfigured } from "@/lib/supabase";
 
 const MAX_FIELD = 2000;
 const hits = new Map<string, number[]>(); // simple per-IP rate limit (per server instance)
@@ -65,13 +66,28 @@ export async function POST(req: Request) {
   }
   row.user_agent = clean(req.headers.get("user-agent"));
 
-  // 1) Save to Google Sheets
   const url = process.env.GOOGLE_SHEET_WEBHOOK_URL;
-  if (!url) {
-    console.warn("[lead] GOOGLE_SHEET_WEBHOOK_URL is not set. Submission:", type, row);
+  if (!supabaseConfigured() && !url) {
+    console.warn("[lead] Neither Supabase nor GOOGLE_SHEET_WEBHOOK_URL is set. Submission:", type, row);
     if (process.env.NODE_ENV === "production")
       return NextResponse.json({ ok: false, error: "Our form isn’t connected yet. Please email us instead." }, { status: 500 });
-  } else {
+  }
+
+  // 1) Save to Supabase (powers the /admin leads dashboard)
+  if (supabaseConfigured()) {
+    // The sheet-safe prefix (') isn't needed in a database, so store the plain values.
+    const data = Object.fromEntries(Object.entries(row).map(([k, v]) => [k, v.replace(/^'(?=[=+\-@])/, "")]));
+    const pick = (k: string) => data[k] || null;
+    try {
+      await insertLead({ form_type: type, first_name: pick("first_name"), last_name: pick("last_name"), email: pick("email"), phone: pick("phone"), data });
+    } catch (err) {
+      console.error("[lead] Could not save to Supabase:", err);
+      return NextResponse.json({ ok: false, error: "Something went wrong saving your details. Please try again." }, { status: 502 });
+    }
+  }
+
+  // 2) Also save to Google Sheets, if connected
+  if (url) {
     try {
       const res = await fetch(url, {
         method: "POST",
@@ -83,11 +99,12 @@ export async function POST(req: Request) {
       if (!out.ok) throw new Error(out.error || "Sheet rejected the row");
     } catch (err) {
       console.error("[lead] Could not save to Google Sheets:", err);
-      return NextResponse.json({ ok: false, error: "Something went wrong saving your details. Please try again." }, { status: 502 });
+      // Already in Supabase? Then the lead is safe, so don't make the visitor submit twice.
+      if (!supabaseConfigured()) return NextResponse.json({ ok: false, error: "Something went wrong saving your details. Please try again." }, { status: 502 });
     }
   }
 
-  // 2) Optional: start a real AI demo call through Vapi
+  // 3) Optional: start a real AI demo call through Vapi
   if (type === "demo_call" && process.env.VAPI_API_KEY && process.env.VAPI_ASSISTANT_ID && process.env.VAPI_PHONE_NUMBER_ID) {
     try {
       await fetch("https://api.vapi.ai/call", {
