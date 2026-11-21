@@ -44,7 +44,10 @@ export default function BookPage() {
             </div>
           )}
           <p className="mt-10 text-[14px] text-muted">
-            Or email us: <span className="select-all font-medium text-ink">{site.contactEmail}</span>
+            Or call us on{" "}
+            <a href={`tel:${site.phone.tel}`} className="font-medium text-ink hover:underline">{site.phone.display}</a>
+            {" "}or email{" "}
+            <a href={`mailto:${site.contactEmail}`} className="font-medium text-ink hover:underline">{site.contactEmail}</a>
           </p>
         </div>
         <div className="rounded-[var(--radius-card)] border border-line bg-paper p-5 shadow-[var(--shadow-pop)] sm:p-8">

@@ -3,6 +3,17 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Arrow, Section, SectionHead } from "@/components/ui";
+import { BookingDemo } from "./BookingDemo";
+import { CallingDemo } from "./CallingDemo";
+import { LeadsDemo } from "./LeadsDemo";
+import { PipelineDemo } from "./PipelineDemo";
+import { QualifyDemo } from "./QualifyDemo";
+
+const demos = { leads: LeadsDemo, calling: CallingDemo, qualify: QualifyDemo, booking: BookingDemo, pipeline: PipelineDemo };
+function LiveDemo({ name }: { name: keyof typeof demos }) {
+  const Demo = demos[name];
+  return <Demo />;
+}
 import styles from "./Flow.module.css";
 
 /** Actual product screens captured from RealtyCare CRM, with contacts hidden. */
@@ -10,31 +21,31 @@ const steps = [
   {
     title: "Lead captured",
     body: "From your website, landing pages, Facebook lead ads or portals like Zillow. It lands in one inbox.",
-    screen: "leads", label: "Your lead inbox", width: 1152, height: 650,
+    screen: "leads", label: "Your lead inbox", width: 1152, height: 650, live: "leads" as const,
     alt: "RealtyCare lead workspace with filters, qualification totals and the lead inbox. Contact details are blurred.",
   },
   {
     title: "AI calls within 60 seconds*",
     body: "Your AI assistant calls, introduces itself as an AI and starts a natural conversation.",
-    screen: "calling-overview", label: "AI calling overview", width: 1152, height: 530,
+    screen: "calling-overview", label: "AI calling overview", width: 1152, height: 530, live: "calling" as const,
     alt: "Actual RealtyCare AI Calling Overview with lead totals, appointment metrics and AI lead summary.",
   },
   {
     title: "Lead qualified",
     body: "Budget, timeline, location and pre-approval, asked the way you would ask them.",
-    screen: "qualification", label: "AI lead qualification", width: 544, height: 265,
+    screen: "qualification", label: "AI lead qualification", width: 544, height: 265, live: "qualify" as const,
     alt: "RealtyCare AI Lead Summary showing the qualification chart and qualified, follow-up and not-qualified categories.",
   },
   {
     title: "Appointment booked",
     body: "Qualified leads pick a time on your calendar, or get transferred to you live.",
-    screen: "appointments", label: "Your appointment calendar", width: 1152, height: 880,
+    screen: "appointments", label: "Your appointment calendar", width: 1152, height: 880, live: "booking" as const,
     alt: "RealtyCare appointment workspace showing the monthly calendar, booking controls and daily agenda.",
   },
   {
     title: "Deal in your pipeline",
     body: "Every call, note and next step is in your CRM. Leads who aren’t ready stay on follow-up for 12 months.",
-    screen: "pipeline", label: "Your CRM pipeline", width: 686, height: 253,
+    screen: "pipeline", label: "Your CRM pipeline", width: 686, height: 253, live: "pipeline" as const,
     alt: "RealtyCare CRM pipeline showing New Lead, Contacted, Application and Appointment Set stages.",
   },
 ];
@@ -92,8 +103,8 @@ export function Flow() {
                   <span className={styles.screenBrand}><span className={styles.brandMark} aria-hidden="true" />RealtyCare<span className={styles.screenDivider}>/</span><span className={styles.screenLabel}>{step.label}</span></span>
                   <span className={styles.expand} aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6M4 20l7-7" /></svg></span>
                 </span>
-                <span className={styles.screenCanvas}>
-                  <Image src={`/images/crm/${step.screen}.webp`} alt={step.alt} width={step.width} height={step.height} sizes="(max-width: 767px) calc(100vw - 100px), (max-width: 1200px) 40vw, 420px" />
+                <span className={styles.screenCanvas} data-live>
+                  <LiveDemo name={step.live} />
                 </span>
                 <span className={styles.screenFooter}><span>Actual product screen</span><span className={styles.viewScreen}>View screen <Arrow className="h-3.5 w-3.5" /></span></span>
               </button>
@@ -101,7 +112,6 @@ export function Flow() {
           </li>
         ))}
       </ol>
-      <p className={styles.screenNote}>Screenshots from the RealtyCare CRM. Contact details are hidden.</p>
       <dialog ref={dialogRef} className={styles.dialog} aria-labelledby="crm-screen-title" onClose={() => setSelected(null)} onClick={(event) => { if (event.target === event.currentTarget) dialogRef.current?.close(); }}>
         {selected && <div className={styles.dialogContent}>
           <div className={styles.dialogHeader}>

@@ -1,6 +1,5 @@
 /**
  * Site-wide settings. Most day-to-day edits happen in this folder (src/content).
- * Anything in [BRACKETS] is a placeholder you still need to fill in.
  */
 export const site = {
   name: "RealtyCare.io",
@@ -12,10 +11,20 @@ export const site = {
   /** Paste your Calendly (or similar) link here. When empty, "Book a call" buttons open the /book form. */
   bookingUrl: "",
 
-  contactEmail: "hello@realtycare.io", // [CONFIRM]
-  legalName: "[UK COMPANY NAME] Ltd", // shown in the footer and legal pages
-  companyNumber: "[COMPANY NUMBER]",
-  address: "[REGISTERED ADDRESS], United Kingdom",
+  contactEmail: "info@realtycare.io",
+  /** Main contact number. `display` is what people see, `tel` is the dial link (E.164). */
+  phone: { display: "+1 (918) 601-3850", tel: "+19186013850" },
+
+  /** Legal details used in the footer, privacy policy and terms. Leave a field empty to hide it. */
+  legal: {
+    entityName: "RealtyCare.io", // registered company name, e.g. "RealtyCare Ltd"
+    companyNumber: "", // e.g. "12345678"
+    address: "", // registered address
+    lastUpdated: "21 November 2026", // change whenever you edit the privacy policy or terms
+    retentionMonths: 24, // how long lead and contact data is kept after the last contact
+    cancellationNoticeDays: 30,
+    governingLaw: "England and Wales",
+  },
 
   social: {
     instagram: "", // full URLs; empty ones are hidden
